@@ -1,25 +1,27 @@
 if (process.env.USER) require("dotenv").config();
-
 const express = require("express");
-const cors = require("cors");
-
-const moviesRouter = require("./movies_route/movies.router");
-const reviewsRouter = require("./reviews_route/reviews.router");
-const theatersRouter = require("./theaters_route/theaters.router");
-
-const errorHandler = require("./errors/errorHandler");
-const notFound = require("./errors/notFound");
-
+const cors = require('cors');
 const app = express();
 
-app.use(express.json());
+//Routes
+
+const moviesRouter = require('./movies/movies.router');
+const theatersRouter = require('./theaters/theaters.router');
+const reviewsRouter = require('./reviews/reviews.router');
+
+//Error Handlers
+const notFound = require('./errors/notFound');
+const errorHandler = require('./errors/errorHandler');
 
 app.use(cors());
+app.use(express.json());
 
-app.use("/movies", moviesRouter);
-app.use("/reviews", reviewsRouter);
-app.use("/theaters", theatersRouter);
+//Route Handlers
+app.use('/movies', moviesRouter);
+app.use('/theaters', theatersRouter)
+app.use('/reviews', reviewsRouter);
 
+//Error Handlers
 app.use(notFound);
 app.use(errorHandler);
 
